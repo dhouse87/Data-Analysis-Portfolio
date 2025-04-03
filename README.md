@@ -3,7 +3,7 @@
 
 I'm a Senior Account Executive with a strong track record in enterprise software sales, account management, and partner enablement. After years of driving growth and building relationships across industries—from simulation software to cloud and analytics tools—I'm pivoting into **data analytics** to combine my strategic thinking with data-driven decision-making.
 
-Recently, I’ve completed both the **Google Data Analytics Professional Certificate** and the **Google Advanced Data Analytics Certificate**, building hands-on skills in SQL, Python, Tableau, and Excel. I'm now applying these tools in real-world projects to demonstrate my transition and passion for uncovering insights through data.
+I’ve recently completed both the **Google Data Analytics Professional Certificate** and the **Google Advanced Data Analytics Certificate**, building hands-on skills in SQL, Python, R, Tableau, and Excel. I'm now applying these tools in real-world projects to demonstrate my transition and passion for uncovering insights through data.
 
 ---
 
@@ -20,29 +20,17 @@ Recently, I’ve completed both the **Google Data Analytics Professional Certifi
 
 > This section highlights a few of my current and upcoming projects. Each project includes a brief description, the tools used, and key takeaways.
 
-### 🧠 Movie Success Analysis  
-**Goal**: Explore what factors correlate most with a movie’s box office performance  
-**Tools**: Python, Pandas, Matplotlib, Seaborn  
-**Skills**: Data cleaning, correlation analysis, EDA, visualization  
-**Outcome**: Identified "votes" and "budget" as key drivers of gross revenue.
+### 🏀 NBA 3-Point College Draft Analysis
+Goal: Identify which colleges have historically produced the most successful 3-point shooters in the NBA Draft (1979–2024), focusing on volume and efficiency.
+Tools: Python, Pandas, NumPy, Matplotlib, Seaborn
+Skills: Data cleaning, merging multiple datasets, null handling, feature engineering, EDA, visualization
+Outcome: Found that a handful of programs consistently produce high-performing 3-point shooters, offering insights for scouting and performance analytics. The analysis excluded overseas, high school, and pre-1979 players to maintain NCAA-focused integrity.
 
-### 🛒 Tech Store Sales Analysis  
-**Goal**: Understand sales trends and make data-driven suggestions for performance improvement  
-**Tools**: Python, Pandas, Matplotlib  
-**Skills**: EDA, hypothesis testing, business insight generation  
-**Outcome**: Provided actionable insights on top-selling products and high-performing cities/months.
-
-### 🏠 Nashville Housing Data Cleaning  
-**Goal**: Clean a housing dataset for future analysis  
-**Tools**: SQL (SQL Server)  
-**Skills**: Joins, subqueries, data transformation, handling nulls  
-**Outcome**: Delivered a fully cleaned dataset for use in analytics and visualization tools.
-
-### 🦠 COVID-19 Data Exploration  
-**Goal**: Examine global COVID-19 trends using SQL  
-**Tools**: SQL Server  
-**Skills**: CTEs, temp tables, aggregate functions, data filtering  
-**Outcome**: Highlighted infection and vaccination trends across time and regions.
+### ♠️ Blackjack Card Counter and Probability Advisor
+Goal: Help players improve decision-making in Blackjack by calculating the probability of drawing key cards (Aces and high cards), providing card count advice, and simulating multiple-player scenarios.
+Tools: Python, Colorama, Collections, Itertools
+Skills: Probability calculation, card counting (Hi-Lo), user input handling, terminal-based interaction, game simulation
+Outcome: Created an interactive terminal-based tool that calculates draw probabilities, performs Hi-Lo card counting, and gives real-time betting odds in multi-player/multi-deck Blackjack scenarios.
 
 ---
 
