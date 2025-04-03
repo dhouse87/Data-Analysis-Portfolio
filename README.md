@@ -54,4 +54,4 @@ Outcome: Created an interactive terminal-based tool that calculates draw probabi
 
 ## 🚀 What's Next?
 
-I’m actively working on new analytics projects and refining my skills in Tableau and Power BI. I’m open to opportunities and collaborations where I can contribute insights and grow in a data-driven role.
+I’m actively working on new analytics projects and refining my skills in Tableau, Python and Power BI. I’m open to opportunities and collaborations where I can contribute insights and grow in a data-driven role.
