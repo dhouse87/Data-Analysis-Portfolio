@@ -38,8 +38,8 @@ Outcome: Created an interactive terminal-based tool that calculates draw probabi
 
 - **B.A. in English** – University of Massachusetts, Lowell  
   Minor: Management and Graphic Design  
-- **Google Data Analytics Professional Certificate** – Jan 2025  
-- **Google Advanced Data Analytics Certificate** – Mar 2025  
+- **[Google Data Analytics Professional Certificate** – Jan 2025](https://coursera.org/share/b6e6d427f1d7089417b453c03078a6d2)  
+- **[Google Advanced Data Analytics Certificate** – Mar 2025](https://coursera.org/share/3dbdfe281813b7ff1627c1a598e511ae)  
 - **AWS Cloud Practitioner** – Mar 2020  
 
 ---
