@@ -1,0 +1,276 @@
+from matplotlib.pyplot import xticks
+import pygame
+import os
+import time
+
+# Initialize Pygame
+pygame.init()
+pygame.mixer.set_num_channels(32)
+
+# Window setup
+WINDOW_WIDTH = int(1200 * 1.15)
+WINDOW_HEIGHT = int(400 * 1.6)
+WINDOW_TITLE = "Virtual Piano (32 Keys) - Custom Interface"
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption(WINDOW_TITLE)
+
+# Key mapping setup
+key_data = [
+    (1,  "C3",   "3-c.wav",   pygame.K_a),
+    (2,  "C#3",  "3-cs.wav",  pygame.K_q),
+    (3,  "D3",   "3-d.wav",   pygame.K_s),
+    (4,  "D#3",  "3-ds.wav",  pygame.K_w),
+    (5,  "E3",   "3-e.wav",   pygame.K_d),
+    (6,  "F3",   "3-f.wav",   pygame.K_f),
+    (7,  "F#3",  "3-fs.wav",  pygame.K_e),
+    (8,  "G3",   "3-g.wav",   pygame.K_g),
+    (9,  "G#3",  "3-gs.wav",  pygame.K_r),
+    (10, "A3",   "3-a.wav",   pygame.K_h),
+    (11, "A#3",  "3-as.wav",  pygame.K_t),
+    (12, "B3",   "3-b.wav",   pygame.K_j),
+    (13, "C4",   "4-c.wav",   pygame.K_k),
+    (14, "C#4",  "4-cs.wav",  pygame.K_y),
+    (15, "D4",   "4-d.wav",   pygame.K_l),
+    (16, "D#4",  "4-ds.wav",  pygame.K_u),
+    (17, "E4",   "4-e.wav",   pygame.K_SEMICOLON),
+    (18, "F4",   "4-f.wav",   pygame.K_QUOTE),
+    (19, "F#4",  "4-fs.wav",  pygame.K_i),
+    (20, "G4",   "4-g.wav",   pygame.K_z),
+    (21, "G#4",  "4-gs.wav",  pygame.K_o),
+    (22, "A4",   "4-a.wav",   pygame.K_x),
+    (23, "A#4",  "4-as.wav",  pygame.K_p),
+    (24, "B4",   "4-b.wav",   pygame.K_c),
+    (25, "C5",   "5-c.wav",   pygame.K_v),
+    (26, "C#5",  "5-cs.wav",  pygame.K_LEFTBRACKET),
+    (27, "D5",   "5-d.wav",   pygame.K_b),
+    (28, "D#5",  "5-ds.wav",  pygame.K_RIGHTBRACKET),
+    (29, "E5",   "5-e.wav",   pygame.K_n),
+    (30, "F5",   "5-f.wav",   pygame.K_m),
+    (31, "F#5",  "5-fs.wav",  pygame.K_BACKSLASH),
+    (32, "G5",   "5-g.wav",   pygame.K_COMMA),
+]
+
+# Paths and sound loading
+sound_folder = r"C:\Users\david\OneDrive\Desktop\piano\Sounds"
+sounds = {}
+sound_channels = {}
+
+# Define key layout
+white_keys = [k for k in key_data if '#' not in k[1]]
+black_keys = [k for k in key_data if '#' in k[1]]
+
+WHITE_WIDTH = int(40 * 1.15)
+WHITE_HEIGHT = int(200 * 1.6)
+BLACK_WIDTH = int(25 * 1.15)
+BLACK_HEIGHT = int(120 * 1.6)
+
+white_key_rects = []
+black_key_rects = []
+total_white_width = len(white_keys) * WHITE_WIDTH
+start_x = (WINDOW_WIDTH - total_white_width) // 2
+white_x = start_x
+for i, key in enumerate(white_keys):
+    rect = pygame.Rect(white_x, 150, WHITE_WIDTH, WHITE_HEIGHT)
+    white_key_rects.append((key, rect))
+    white_x += WHITE_WIDTH
+
+# Manually position black keys between white keys
+black_positions = [1, 2, 4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20, 22, 23]
+black_index = 0
+for i in range(len(white_key_rects) - 1):
+    if black_index < len(black_keys) and i + 1 in black_positions:
+        x = white_key_rects[i][1].x + WHITE_WIDTH - BLACK_WIDTH // 2
+        rect = pygame.Rect(x, 150, BLACK_WIDTH, BLACK_HEIGHT)
+        black_key_rects.append((black_keys[black_index], rect))
+        black_index += 1
+
+for key in key_data:
+    path = os.path.join(sound_folder, key[2])
+    try:
+        sound = pygame.mixer.Sound(path)
+        channel = pygame.mixer.Channel(key[0] - 1)
+        sounds[key[3]] = sound
+        sound_channels[key[3]] = channel
+    except pygame.error:
+        print(f"Missing sound file: {key[2]}")
+
+# State
+theme_dark = False
+active_keys = {}
+sustain_enabled = False
+sustain_locked = False
+mouse_state_enabled = False
+mouse_state_locked = False
+clock = pygame.time.Clock()
+mouse_held = False
+running = True
+
+button_font = pygame.font.SysFont(None, 20)
+
+slider_grabbed = False
+
+while running:
+    bg_color = (30, 30, 30) if theme_dark else (255, 255, 255)
+    text_color = (255, 255, 255) if theme_dark else (0, 0, 0)
+    screen.fill(bg_color)
+    mouse_pos = pygame.mouse.get_pos()
+
+    if not mouse_state_locked:
+        mouse_state_enabled = mouse_held
+
+    play_notes = mouse_held or mouse_state_enabled
+
+    # Draw white keys
+    black_hovered = any(rect.collidepoint(mouse_pos) for _, rect in black_key_rects)
+    for key, rect in white_key_rects:
+        if not black_hovered and rect.collidepoint(mouse_pos):
+            color = (200, 200, 200)
+        else:
+            color = (255, 255, 255)
+        pygame.draw.rect(screen, color, rect)
+        pygame.draw.rect(screen, (0, 0, 0), rect, 2)
+        key_label = pygame.key.name(key[3]).upper()
+        label_color = (255, 255, 255) if (theme_dark and color == (0, 0, 0)) else (0, 0, 0)
+        
+        label_surface = button_font.render(key_label, True, label_color)
+        label_rect = label_surface.get_rect(center=(rect.centerx, rect.bottom - 10))
+        screen.blit(label_surface, label_rect)
+
+    # Draw black keys
+    for key, rect in black_key_rects:
+        color = (80, 80, 80) if rect.collidepoint(mouse_pos) else (0, 0, 0)
+        pygame.draw.rect(screen, color, rect)
+        key_label = pygame.key.name(key[3]).upper()
+        
+        label_color = (255, 255, 255)
+        label_surface = button_font.render(key_label, True, label_color)
+        label_rect = label_surface.get_rect(center=(rect.centerx, rect.bottom - 10))
+        screen.blit(label_surface, label_rect)
+
+    button_font = pygame.font.SysFont(None, 20)
+
+    # Draw sustain button
+    theme_button_text = button_font.render("THEME", True, text_color)
+    theme_button_rect = pygame.Rect(20, 120, 140, 36)
+    pygame.draw.rect(screen, (60, 60, 60) if theme_dark else (230, 230, 230), theme_button_rect, border_radius=6)
+    pygame.draw.rect(screen, (255, 255, 255) if theme_dark else (0, 0, 0), theme_button_rect, 2, border_radius=6)
+    screen.blit(theme_button_text, (theme_button_rect.x + 10, theme_button_rect.y + 10))
+    button_font = pygame.font.SysFont(None, 20)
+    button_text = button_font.render("SUSTAIN", True, (0, 0, 0))
+    button_rect = pygame.Rect(20, 20, 140, 36)
+    pygame.draw.rect(screen, (230, 230, 230), button_rect, border_radius=6)
+    pygame.draw.rect(screen, (0, 0, 0), button_rect, 2, border_radius=6)
+    screen.blit(button_text, (button_rect.x + 10, button_rect.y + 10))
+    dot_color = (0, 180, 0) if sustain_enabled else (180, 0, 0)
+    pygame.draw.circle(screen, dot_color, (button_rect.right - 15, button_rect.centery), 8)
+
+    # Draw mouse down button
+    mouse_button_text = button_font.render("MOUSE DOWN", True, (0, 0, 0))
+    mouse_button_rect = pygame.Rect(20, 70, 140, 36)
+    pygame.draw.rect(screen, (230, 230, 230), mouse_button_rect, border_radius=6)
+    pygame.draw.rect(screen, (0, 0, 0), mouse_button_rect, 2, border_radius=6)
+    screen.blit(mouse_button_text, (mouse_button_rect.x + 10, mouse_button_rect.y + 10))
+    mouse_dot_color = (0, 180, 0) if mouse_state_enabled else (180, 0, 0)
+    pygame.draw.circle(screen, mouse_dot_color, (mouse_button_rect.right - 15, mouse_button_rect.centery), 8)
+
+    # Draw indicator dots and note names above active keys
+    for keycode in active_keys:
+        for key, rect in white_key_rects + black_key_rects:
+            if key[3] == keycode:
+                dot_x = rect.centerx
+                dot_y = rect.top - 10
+                pygame.draw.circle(screen, (255, 140, 0), (dot_x, dot_y), 6)
+                note_surface = button_font.render(key[1], True, text_color)
+                note_rect = note_surface.get_rect(center=(dot_x, dot_y - 14))
+                screen.blit(note_surface, note_rect)
+                break
+
+    # Check key fadeouts
+    current_time = pygame.time.get_ticks()
+    expired_keys = []
+    for keycode in list(active_keys):
+        if not sustain_enabled and current_time - active_keys[keycode] > 500:
+            sound_channels[keycode].fadeout(500)
+            expired_keys.append(keycode)
+    for keycode in expired_keys:
+        del active_keys[keycode]
+
+    # Support mouse drag across keys
+    if play_notes:
+        black_first = False
+        for key, rect in black_key_rects:
+            if rect.collidepoint(mouse_pos):
+                keycode = key[3]
+                if keycode not in active_keys:
+                    sound_channels[keycode].stop()
+                    sound_channels[keycode].play(sounds[keycode])
+                    active_keys[keycode] = pygame.time.get_ticks()
+                black_first = True
+                break
+        if not black_first:
+            for key, rect in white_key_rects:
+                if rect.collidepoint(mouse_pos):
+                    keycode = key[3]
+                    if keycode not in active_keys:
+                        sound_channels[keycode].play(sounds[keycode])
+                        active_keys[keycode] = pygame.time.get_ticks()
+
+    # Draw volume slider
+    volume_label = button_font.render("VOLUME", True, text_color)
+    volume_rect = pygame.Rect(20, 220, 140, 10)
+    pygame.draw.rect(screen, (200, 200, 200), volume_rect)
+    pygame.draw.rect(screen, (50, 50, 50), (volume_rect.x, volume_rect.y, int(volume_rect.width * pygame.mixer.music.get_volume()), volume_rect.height))
+    screen.blit(volume_label, (volume_rect.x, volume_rect.y - 20))
+
+    
+
+    if slider_grabbed:
+        mouse_x = pygame.mouse.get_pos()[0]
+        new_volume = max(0, min(1, (mouse_x - 20) / 140))
+        pygame.mixer.music.set_volume(new_volume)
+        for sound in sounds.values():
+            sound.set_volume(new_volume)
+
+    pygame.display.flip()
+
+    slider_grabbed = False  # Move to top-level state
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            elif event.key == pygame.K_SPACE:
+                if not sustain_locked:
+                    sustain_enabled = True
+            elif event.key in sounds:
+                sound_channels[event.key].stop()
+                sound_channels[event.key].play(sounds[event.key])
+                active_keys[event.key] = pygame.time.get_ticks()
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:
+                if not sustain_locked:
+                    sustain_enabled = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.Rect(20, 220, 140, 10).collidepoint(event.pos):
+                slider_grabbed = True
+            mouse_held = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            slider_grabbed = False
+            mouse_held = False
+            if button_rect.collidepoint(event.pos):
+                sustain_locked = not sustain_locked
+                sustain_enabled = sustain_locked
+            elif mouse_button_rect.collidepoint(event.pos):
+                mouse_state_locked = not mouse_state_locked
+                if not mouse_state_locked:
+                    mouse_state_enabled = mouse_held
+            elif theme_button_rect.collidepoint(event.pos):
+                theme_dark = not theme_dark
+
+            if not mouse_state_locked:
+                    mouse_state_enabled = mouse_held
+            
+            
+            if not mouse_state_locked:
+                    mouse_state_enabled = mouse_held
