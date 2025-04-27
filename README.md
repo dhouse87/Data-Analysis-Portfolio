@@ -27,3 +27,10 @@ Tools: Python, Pygame
 Skills: Event-driven programming, sound integration, GUI layout design, interactive user input  
 Outcome: Created a playable mini-piano with real-time sound feedback, volume control, light/dark themes, sustain features, and mouse support.  
 Project Link: [View on GitHub](https://github.com/dhouse87/minipiano)
+
+### ⏳ ReversePomodoro Python App
+Goal: Flip the traditional Pomodoro technique by starting with a timed break, followed by a focused work session to boost energy and productivity.  
+Tools: Python (Optional: Pygame for sound alerts)  
+Skills: Timer logic, event handling, user interface display, time management app development  
+Outcome: Developed a fully functional ReversePomodoro timer with adjustable break/work durations, real-time countdown, and optional sound notifications.  
+Project Link: [View on GitHub](https://github.com/dhouse87/reversepomodoro)
