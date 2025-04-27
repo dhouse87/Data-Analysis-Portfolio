@@ -1,21 +1,3 @@
-
-# 👋 Hi, I'm David Hovsepian
-
-I'm a Senior Account Executive with a strong track record in enterprise software sales, account management, and partner enablement. After years of driving growth and building relationships across industries—from simulation software to cloud and analytics tools—I'm pivoting into **data analytics** to combine my strategic thinking with data-driven decision-making.
-
-I’ve recently completed both the **Google Data Analytics Professional Certificate** and the **Google Advanced Data Analytics Certificate**, building hands-on skills in SQL, Python, R, Tableau, and Excel. I'm now applying these tools in real-world projects to demonstrate my transition and passion for uncovering insights through data.
-
----
-
-## 🔍 About Me
-
-- 🌍 Based in Alexandria, VA  
-- 🎯 Background: Sales strategy, customer success, and analytics-focused roles in B2B tech companies like Ansys, Insightsoftware, and SmartUQ  
-- 📊 Passionate about using data to tell stories, drive business strategy, and identify patterns that make a difference  
-- 📈 Looking to bring my business acumen and growing analytics skillset to a data-focused role  
-
----
-
 ## 📁 Portfolio Projects
 
 > This section highlights a few of my current and upcoming projects. Each project includes a brief description, the tools used, and key takeaways.
@@ -32,26 +14,9 @@ Tools: Python, Colorama, Collections, Itertools
 Skills: Probability calculation, card counting (Hi-Lo), user input handling, terminal-based interaction, game simulation
 Outcome: Created an interactive terminal-based tool that calculates draw probabilities, performs Hi-Lo card counting, and gives real-time betting odds in multi-player/multi-deck Blackjack scenarios.
 
----
-
-## 📚 Education & Certifications
-
-- **B.A. in English** – University of Massachusetts, Lowell  
-  Minor: Management and Graphic Design  
-- **[Google Data Analytics Professional Certificate** – Jan 2025](https://coursera.org/share/b6e6d427f1d7089417b453c03078a6d2)  
-- **[Google Advanced Data Analytics Certificate** – Mar 2025](https://coursera.org/share/3dbdfe281813b7ff1627c1a598e511ae)  
-- **AWS Cloud Practitioner** – Mar 2020  
-
----
-
-## 📞 Contact
-
-- 📧 Email: [davidhovsepian1@gmail.com](mailto:davidhovsepian1@gmail.com)  
-- 💼 LinkedIn: [David Hovsepian](https://www.linkedin.com/in/davidhovsepian)  
-- 📍 Location: Alexandria, VA  
-
----
-
-## 🚀 What's Next?
-
-I’m actively working on new analytics projects and refining my skills in Tableau, Python and Power BI. I’m open to opportunities and collaborations where I can contribute insights and grow in a data-driven role.
+### ✂️ Rock Paper Scissors Python Game
+Goal: Create a fun, interactive Rock-Paper-Scissors game using Python and Pygame, complete with sound effects, hand animations, and score tracking.
+Tools: Python, Pygame
+Skills: GUI creation, event-driven programming, animation, sound integration
+Outcome: Built a fully functional and animated Rock-Paper-Scissors game with clickable buttons, sound effects for each move and outcome, and continuous gameplay.
+Project Link: [View on GitHub](https://github.com/dhouse87/rockpaperscissor)
