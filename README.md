@@ -5,6 +5,13 @@
 **Outcome:** Found that a handful of programs consistently produce high-performing 3-point shooters, offering insights for scouting and performance analytics. The analysis excluded overseas, high school, and pre-1979 players to maintain NCAA-focused integrity.  
 **Project Link:** [View on GitHub](https://github.com/dhouse87/3pt-college-analysis)
 
+🎥 YouTube Video Translator and Transcriber  
+Goal: Build a batch-processing system that downloads YouTube videos, extracts audio, transcribes speech using cutting-edge AI models, and translates the transcription into English — even for low-resource languages like Armenian, Amharic, and Uzbek.  
+Tools: Python, Faster-Whisper, yt-dlp, Deep-Translator, ffmpeg, TQDM  
+Skills: Audio extraction, multilingual transcription, translation API integration, low-resource language handling, batch file processing, directory management, progress visualization  
+Outcome: Developed a robust translation pipeline that automatically detects or accepts user-specified languages, handles over 100+ languages (with special treatment for under-supported ones), and produces clean transcripts and translations in a professional `output/` structure. Ideal for research, journalism, and multilingual content workflows.  
+Project Link: [View on GitHub](https://github.com/dhouse87/Youtube-Translator)
+
 ♠️ Blackjack Card Counter and Probability Advisor  
 **Goal:** Help players improve decision-making in Blackjack by calculating the probability of drawing key cards (Aces and high cards), providing card count advice, and simulating multiple-player scenarios.  
 **Tools:** Python, Colorama, Collections, Itertools  
